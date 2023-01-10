@@ -75,7 +75,9 @@ def run_trial(win, trial, config, fixation, trial_clock, extra_text, clock_image
                      "rt": reaction_time,
                      "acc": acc,
                      "answer": answer,
-                     "correct_answer": trial.change}
+                     "changed_element": trial.changed_element,
+                     "matrix_1": trial.matrix_1.stimulus_list,
+                     "matrix_2": trial.matrix_2.stimulus_list}
     RESULTS.append(trial_results)
 
     draw_stim_list(extra_text, False)
@@ -86,9 +88,9 @@ def run_trial(win, trial, config, fixation, trial_clock, extra_text, clock_image
     show_stim(None, wait_time, trial_clock, win)
 
 
-def run_block(win, config, trials, stimulus_list, block_type,
+def run_block(win, config, trials, stimulus_list, block_type, screen_res,
               fixation, clock, extra_text, clock_image, timer, feedback, recall_info, mouse):
-    for trial in trials:
+    for i, trial in enumerate(trials):
         chosen_stimulus = random.sample(stimulus_list, trial["n"] + 1)
         t = Trial(win=win, config=config, n=trial["n"], change=trial["change"], size=trial["size"], group_elements=trial["group_elements"])
         t.matrix_1.prepare_to_draw(stimulus_list=chosen_stimulus[:trial["n"]], stimulus_type=config["stimulus_type"], win=win,
@@ -97,7 +99,11 @@ def run_block(win, config, trials, stimulus_list, block_type,
         t.change_stimulus(win=win, new_stimulus=chosen_stimulus[-1], stimulus_type=config["stimulus_type"],
                           border_color=config["stimulus_border_color"], border_width=config["stimulus_border_width"])
         run_trial(win=win, trial=t, config=config, fixation=fixation, trial_clock=clock, extra_text=extra_text, clock_image=clock_image, timer=timer,
-                  feedback=feedback, show_feedback=config["fdbk_experiment"], block_type=block_type, recall_info=recall_info, mouse=mouse)
+                  feedback=feedback, show_feedback=config[f"fdbk_{block_type}"], block_type=block_type, recall_info=recall_info, mouse=mouse)
+
+        if (i+1)%config["show_break_after_n_trials"] == 0:
+            show_info(win, join('.', 'messages', 'break.txt'), text_color=config["text_color"],
+                      text_size=config["text_size"], screen_res=screen_res)
 
 
 def main():
@@ -152,14 +158,16 @@ def main():
                   text_size=config["text_size"], screen_res=screen_res)
 
         run_block(win=win, config=config, trials=training_trials, stimulus_list=stimulus_list, block_type="training", fixation=fixation,
-                  clock=clock, extra_text=extra_text, clock_image=clock_image, timer=timer, feedback=feedback, recall_info=recall_info, mouse=mouse)
+                  clock=clock, extra_text=extra_text, clock_image=clock_image, timer=timer, feedback=feedback, recall_info=recall_info, mouse=mouse,
+                  screen_res=screen_res)
 
     # run experiment
     show_info(win, join('.', 'messages', 'instruction_experiment.txt'), text_color=config["text_color"],
               text_size=config["text_size"], screen_res=screen_res)
 
     run_block(win=win, config=config, trials=experiment_trials, stimulus_list=stimulus_list, block_type="experiment", fixation=fixation,
-              clock=clock, extra_text=extra_text, clock_image=clock_image, timer=timer, feedback=feedback, recall_info=recall_info, mouse=mouse)
+              clock=clock, extra_text=extra_text, clock_image=clock_image, timer=timer, feedback=feedback, recall_info=recall_info, mouse=mouse,
+              screen_res=screen_res)
 
     # end
     show_info(win, join('.', 'messages', 'end.txt'), text_color=config["text_color"],

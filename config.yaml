@@ -21,29 +21,24 @@ stimulus_list: ["g1.png", "g2.png", "g3.png", "g4.png", "g5.png", "g6.png", "g7.
 # reactions
 
 # time parameters
-matrix_1_time: 5
-mask_time: 5
-matrix_2_time: 5
+matrix_1_time: 2
+mask_time: 1
+matrix_2_time: 4
 
 # training
 do_training: True
 fdbk_training: True
 training_randomize: False
-training_trials: [{n_trials: 2, n_elements: 8, size: [3, 3], group_elements: True},
-                  {n_trials: 2, n_elements: 8, size: [3, 3], group_elements: True},
-                  {n_trials: 2, n_elements: 8, size: [3, 3], group_elements: True}]
+training_trials: [{n_trials: 6, n_elements: 6, size: [3, 3], group_elements: True}]
 
 
 # experiment
 fdbk_experiment: False
 experiment_randomize: False
-experiment_trials: [{n_trials: 10, n_elements: 1, size: [3, 3], group_elements: True},
-                    {n_trials: 10, n_elements: 2, size: [3, 3], group_elements: True},
-                    {n_trials: 10, n_elements: 3, size: [3, 3], group_elements: True},
-                    {n_trials: 10, n_elements: 4, size: [3, 3], group_elements: True},
-                    {n_trials: 10, n_elements: 5, size: [3, 3], group_elements: True},
-                    {n_trials: 10, n_elements: 6, size: [3, 3], group_elements: True}]
+experiment_trials: [{n_trials: 100, n_elements: 6, size: [3, 3], group_elements: True}]
 
+# break
+show_break_after_n_trials: 50
 
 # fixation point
 fixation_size: 56

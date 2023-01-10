@@ -1,0 +1,2 @@
+n,size,block_type,rt,acc,answer,changed_element,matrix_1,matrix_2
+6,"[3, 3]",training,1.592933899955824,1,images\all_png\g8.png,images\all_png\g8.png,"['images\\all_png\\g9.png', 'images\\all_png\\g3.png', 'images\\all_png\\g5.png', 'images\\all_png\\g2.png', 'images\\all_png\\g4.png', 'images\\all_png\\g6.png']","['images\\all_png\\g9.png', 'images\\all_png\\g3.png', 'images\\all_png\\g8.png', 'images\\all_png\\g2.png', 'images\\all_png\\g4.png', 'images\\all_png\\g6.png']"
